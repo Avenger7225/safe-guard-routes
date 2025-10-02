@@ -6,6 +6,9 @@ import PostList from '../views/PostList.vue'
 import PostDetail from '../views/PostDetail.vue'
 import Dashboard from '../views/Dashboard.vue'
 import NotFound from '../views/NotFound.vue'
+import Profile from '@/views/Profile.vue'
+import ProfileSettings from '@/views/ProfileSettings.vue'
+import ProfilePosts from '@/views/ProfilePosts.vue'
 
 const routes = [
   {
@@ -41,6 +44,21 @@ const routes = [
     meta: { requiresAuth: true },
     // Pasar el id como prop al componente
     props: true
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile
+  },
+  {
+    path: '/profile-settings',
+    name: 'profile-settings',
+    component: ProfileSettings
+  },
+  {
+    path: '/profile-posts',
+    name: 'profile-posts',
+    component: ProfilePosts
   },
   {
     path: '/dashboard',

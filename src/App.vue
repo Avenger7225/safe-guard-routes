@@ -6,6 +6,7 @@
         <div class="nav-links">
           <router-link to="/">Home</router-link>
           <router-link to="/posts">Posts</router-link>
+          <router-link to="/profile">Profile</router-link>
           <router-link to="/dashboard" v-if="authStore.userRole === 'admin'">
             Dashboard
           </router-link>

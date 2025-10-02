@@ -12,9 +12,8 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { onBeforeRouteLeave, useRoute } from 'vue-router'
 
-// Recibir el id como prop (configurado en router con props: true)
 const props = defineProps({
   id: {
     type: String,
@@ -37,8 +36,26 @@ const loadPost = () => {
   post.value = postsDB[props.id] || null
 }
 
-onMounted(loadPost)
+let entryTime = Date.now()
 
-//Watch para cuando cambie el parámetro de la ruta
+onMounted(loadPost)
 watch(() => props.id, loadPost)
+
+// Guard de Componente
+onBeforeRouteLeave((to, from, next) => {
+  const elapsedTime = (Date.now() - entryTime)
+  console.log('Tiempo transcurrido (ms):', elapsedTime)
+
+  // 5000 milisegundos = 5 segundos
+  if (elapsedTime < 5000){
+    const answer = window.confirm('Seguro de que quieres salir?')
+    if (answer){
+      next()
+    } else {
+      next(false)
+    }
+  } else {
+    next()
+  }
+})
 </script>
