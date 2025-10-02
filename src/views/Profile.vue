@@ -1,12 +1,17 @@
 <template>
   <div>
     <nav v-if="authStore.isAuthenticated">      
-      <router-link to="/profile-settings">
-        Configuración
+      
+      <!-- Enlace a los posts del usuario (/profile/posts) -->
+      <router-link to="/profile-settings" class="nav-button" active-class="active">
+        <i class="fas fa-cog mr-1"></i> Configuración
       </router-link>
-      <router-link to="/profile-posts">
-        Mis Posts
+      
+      <!-- Enlace a los posts del usuario (/profile/posts) -->
+      <router-link to="/profile-posts" class="nav-button" active-class="active">
+        <i class="fas fa-clipboard-list mr-1"></i> Mis Posts
       </router-link>
+
     </nav>
 
     <h3 v-if="authStore.isAuthenticated">
@@ -37,3 +42,15 @@ import { useRouter } from 'vue-router'
 const authStore = useAuthStore()
 const router = useRouter()
 </script>
+
+<style>
+.nav-button {
+    text-decoration: none;
+    color: #4A5568; /* Gris oscuro */
+    padding: 0.5rem 1rem;
+    border-radius: 6px 6px 0 0; /* Bordes redondeados en la parte superior */
+    transition: all 0.2s;
+    font-weight: 500;
+    margin-bottom: -2px; /* Superpone un poco el borde inferior del nav */
+}
+</style>
