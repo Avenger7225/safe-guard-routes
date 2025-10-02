@@ -81,26 +81,33 @@ const router = createRouter({
 })
 
 // Guard Global - Se ejecuta antes de cada navegación
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
-  
+
+  // 🔹 Simular llamada asíncrona a un "API" que valida sesión
+  const isValid = await new Promise((resolve) => {
+    setTimeout(() => {
+      // Aquí podrías poner lógica real, ej: fetch a tu backend
+      resolve(authStore.isAuthenticated) 
+    }, 1000) // espera 1 segundo
+  })
+
   // Verificar si la ruta requiere autenticación
-  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    // Guardar la ruta a la que intentaba acceder
+  if (to.meta.requiresAuth && !isValid) {
     next({ 
       name: 'login',
       query: { redirect: to.fullPath }
     })
     return
   }
-  
+
   // Verificar si la ruta requiere rol de admin
   if (to.meta.requiresAdmin && authStore.userRole !== 'admin') {
     alert('No tienes permisos de administrador')
     next({ name: 'home' })
     return
   }
-  
+
   next()
 })
 
