@@ -1,4 +1,5 @@
 <template>
+  <!-- Informacion del post -->
   <div class="post-detail" v-if="post">
     <h2>{{ post.title }}</h2>
     <p class="author">Por: {{ post.author }}</p>
@@ -32,7 +33,7 @@ const postsDB = {
 }
 
 const loadPost = () => {
-  // Obtener post según el ID de la ruta
+  // Obtener post segun el ID de la ruta
   post.value = postsDB[props.id] || null
 }
 
@@ -46,7 +47,7 @@ onBeforeRouteLeave((to, from, next) => {
   const elapsedTime = (Date.now() - entryTime)
   console.log('Tiempo transcurrido (ms):', elapsedTime)
 
-  // 5000 milisegundos = 5 segundos
+  // recordatorio: 5000 milisegundos = 5 segundos
   if (elapsedTime < 5000){
     const answer = window.confirm('Seguro de que quieres salir?')
     if (answer){

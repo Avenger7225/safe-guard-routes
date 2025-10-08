@@ -63,9 +63,12 @@ const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: Dashboard,
     // Guard: Solo administradores
-    meta: { requiresAuth: true, requiresAdmin: true }
+    component: () => import('../views/Dashboard.vue'),
+    meta: { 
+      requiresAuth: true,
+      requiresRole: ['dashboard']
+    }
   },
   {
     // Ruta catch-all para 404
@@ -80,19 +83,18 @@ const router = createRouter({
   routes
 })
 
-// Guard Global - Se ejecuta antes de cada navegación
+// Guard Global, se ejecuta antes de cada navegacion
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
 
-  // 🔹 Simular llamada asíncrona a un "API" que valida sesión
+  // simular llamada asíncrona a un "API" que valida la sesion
   const isValid = await new Promise((resolve) => {
     setTimeout(() => {
-      // Aquí podrías poner lógica real, ej: fetch a tu backend
       resolve(authStore.isAuthenticated) 
-    }, 1000) // espera 1 segundo
+    }, 1000) // delay de 1 segundo
   })
 
-  // Verificar si la ruta requiere autenticación
+  // Verificar si la ruta requiere autenticacion
   if (to.meta.requiresAuth && !isValid) {
     next({ 
       name: 'login',
@@ -111,9 +113,8 @@ router.beforeEach(async (to, from, next) => {
   next()
 })
 
-// Guard Global - Se ejecuta después de cada navegación
+// Guard Global, se ejecuta después de cada navegacion
 router.afterEach((to, from) => {
-  // Útil para analytics, scroll, cambiar título, etc.
   document.title = to.name ? `Blog - ${to.name}` : 'Blog'
 })
 

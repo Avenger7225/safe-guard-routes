@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <h2>Panel de Administración</h2>
+    <h2>Panel de Administracion</h2>
     <p>Solo administradores pueden ver esto</p>
     <ul>
       <li>Total de posts: 3</li>

@@ -13,7 +13,7 @@
           
           <div class="auth-section">
             <span v-if="authStore.isAuthenticated" class="user-info">
-              {{ authStore.user }}
+              {{ authStore.user.name }}
               <span v-if="authStore.userRole === 'admin'" class="badge">Admin</span>
             </span>
             <router-link v-if="!authStore.isAuthenticated" to="/login" class="btn-login">
@@ -28,7 +28,7 @@
     </header>
 
     <main>
-      <!-- Aquí se renderizan todas las vistas según la ruta -->
+      <!-- renderizado de las vistas -->
       <router-view />
     </main>
 
@@ -123,8 +123,6 @@ header {
 
 .btn-login,
 .btn-logout {
-  background: white;
-  color: #42b983;
   border: none;
   padding: 0.5rem 1.5rem;
   border-radius: 4px;

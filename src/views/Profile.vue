@@ -2,20 +2,19 @@
   <div>
     <nav v-if="authStore.isAuthenticated">      
       
-      <!-- Enlace a los posts del usuario (/profile/posts) -->
       <router-link to="/profile-settings" class="nav-button" active-class="active">
         <i class="fas fa-cog mr-1"></i> Configuración
       </router-link>
-      
-      <!-- Enlace a los posts del usuario (/profile/posts) -->
+
       <router-link to="/profile-posts" class="nav-button" active-class="active">
         <i class="fas fa-clipboard-list mr-1"></i> Mis Posts
       </router-link>
 
     </nav>
 
+    <!-- Informacion basica del usuario-->
     <h3 v-if="authStore.isAuthenticated">
-      Bienvenido, {{ authStore.user }}
+      Bienvenido, {{ authStore.user.name }}
       <p>Aquí puedes ver un resumen de tu actividad reciente.</p>
       <ul>
         <li>Último inicio de sesión: Hoy</li>
@@ -46,11 +45,11 @@ const router = useRouter()
 <style>
 .nav-button {
     text-decoration: none;
-    color: #4A5568; /* Gris oscuro */
+    color: #4A5568;
     padding: 0.5rem 1rem;
-    border-radius: 6px 6px 0 0; /* Bordes redondeados en la parte superior */
+    border-radius: 6px 6px 0 0;
     transition: all 0.2s;
     font-weight: 500;
-    margin-bottom: -2px; /* Superpone un poco el borde inferior del nav */
+    margin-bottom: -2px;
 }
 </style>
