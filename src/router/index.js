@@ -91,7 +91,7 @@ router.beforeEach(async (to, from, next) => {
   const isValid = await new Promise((resolve) => {
     setTimeout(() => {
       resolve(authStore.isAuthenticated) 
-    }, 1000) // delay de 1 segundo
+    }, 1000) // 1000 = delay de 1 segundo
   })
 
   // Verificar si la ruta requiere autenticacion

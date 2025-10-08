@@ -119,7 +119,6 @@ const handleLogin = async () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
 }
 
@@ -225,7 +224,7 @@ input:disabled {
 
 .login-button {
   padding: 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #3498db;
   color: white;
   border: none;
   border-radius: 8px;

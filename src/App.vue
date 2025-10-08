@@ -10,7 +10,7 @@
           <router-link to="/dashboard" v-if="authStore.userRole === 'admin'">
             Dashboard
           </router-link>
-          
+        
           <div class="auth-section">
             <span v-if="authStore.isAuthenticated" class="user-info">
               {{ authStore.user.name }}
@@ -23,6 +23,7 @@
               Logout
             </button>
           </div>
+
         </div>
       </nav>
     </header>
@@ -33,7 +34,7 @@
     </main>
 
     <footer>
-      <p>&copy; 2025 Mi Blog - Práctica Vue Router</p>
+      <p>&copy; 2025 Mi Blog - Practica Vue Router</p>
     </footer>
   </div>
 </template>
@@ -59,7 +60,7 @@ const handleLogout = () => {
 }
 
 header {
-  background: #42b983;
+  background: #3498db;
   color: white;
   padding: 1rem 2rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -147,7 +148,7 @@ main {
 }
 
 footer {
-  background: #2c3e50;
+  background: #3498db;
   color: white;
   text-align: center;
   padding: 1.5rem;
