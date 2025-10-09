@@ -3,7 +3,7 @@
     <h1>Bienvenido al Blog</h1>
 
     <p v-if="authStore.isAuthenticated">
-      Hola, {{ authStore.user.name }}! 
+      Hola, {{ authStore.user.name }}!
       <span v-if="authStore.userRole === 'admin'">(Administrador)</span>
     </p>
     <p v-else>Por favor, inicia sesión para acceder a todo el contenido</p>

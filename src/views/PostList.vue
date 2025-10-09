@@ -1,6 +1,6 @@
 <template>
   <div class="post-list">
-    <h2>Lista de Posts</h2>
+    <h2 class="title">Lista de Posts</h2>
 
     <!-- Filtros -->
     <div class="filters">

@@ -1,46 +1,70 @@
 <template>
-  <!-- Informacion del post -->
   <div class="post-detail" v-if="post">
     <h2>{{ post.title }}</h2>
     <p class="author">Por: {{ post.author }}</p>
-    <div class="content">{{ post.content }}</div>
+    <div class="content">{{ post.excerpt }}</div>
     <button @click="$router.back()">Volver</button>
   </div>
-  <div v-else>
+  <div v-else-if="post === null && !loading">
     <p>Post no encontrado</p>
+  </div>
+  <div v-else>
+    <p>Cargando post...</p>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-import { onBeforeRouteLeave, useRoute } from 'vue-router'
+import { onBeforeRouteLeave } from 'vue-router'
+import { supabase } from '@/supabase'
 
 const props = defineProps({
   id: {
-    type: String,
+    type: [String, Number],
     required: true
   }
 })
 
-const route = useRoute()
 const post = ref(null)
+const loading = ref(false)
 
-// Simular base de datos
-const postsDB = {
-  '1': { id: 1, title: 'Introducción a Vue 3', author: 'Juan', content: 'Contenido completo del post 1...' },
-  '2': { id: 2, title: 'Composition API', author: 'María', content: 'Contenido completo del post 2...' },
-  '3': { id: 3, title: 'Vue Router 4', author: 'Pedro', content: 'Contenido completo del post 3...' },
-}
+const fetchPostById = async (postId) => {
+  loading.value = true
+  post.value = null // Limpiar el post anterior
 
-const loadPost = () => {
-  // Obtener post segun el ID de la ruta
-  post.value = postsDB[props.id] || null
+  const idToFetch = Number(postId) 
+
+  // Verificar que el ID sea válido antes de la consulta
+  if (isNaN(idToFetch) || idToFetch <= 0) {
+    console.error("ID de post no válido:", postId);
+    loading.value = false;
+    return;
+  }
+  
+  const { data, error } = await supabase
+    .from('posts')
+    .select('id, title, author, excerpt') 
+    .eq('id', idToFetch)
+    .single() 
+
+  if (error && error.code !== 'PGRST116') { // PGRST116 = No Results
+    console.error('Error al obtener post:', error)
+  } 
+  
+  // Si data es null (PGRST116) post.value sera null, mostrara "Post no encontrado"
+  post.value = data
+  loading.value = false
 }
 
 let entryTime = Date.now()
 
-onMounted(loadPost)
-watch(() => props.id, loadPost)
+onMounted(() => {
+  fetchPostById(props.id)
+})
+watch(() => props.id, (newId) => {
+  fetchPostById(newId)
+})
+
 
 // Guard de Componente
 onBeforeRouteLeave((to, from, next) => {
