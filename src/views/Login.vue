@@ -58,7 +58,7 @@
         </button>
       </form>
 
-      <!-- Informacion de usuarios de prueba -->
+      <!-- Informacion de usuarios de prueba 
       <div class="test-users">
         <p class="test-users-title">Usuarios de prueba:</p>
         <ul>
@@ -66,7 +66,7 @@
           <li><strong>Usuario:</strong> usuario1 / user123</li>
           <li><strong>Moderador:</strong> moderador / mod123</li>
         </ul>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

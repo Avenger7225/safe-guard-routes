@@ -13,15 +13,15 @@
     </nav>
 
     <!-- Informacion basica del usuario-->
-    <h3 v-if="authStore.isAuthenticated">
+    <h3 v-if="authStore.isAuthenticated" class="title">
       Bienvenido, {{ authStore.user.name }}
-      <p>Aquí puedes ver un resumen de tu actividad reciente.</p>
+      <p>Resumen de tu actividad reciente (simulado)</p>
       <ul>
         <li>Último inicio de sesión: Hoy</li>
         <li>Rol actual: {{ authStore.userRole }}</li>
         <li>Posts publicados: 4</li>
         </ul>
-      <p>Usa la barra de navegación superior para acceder a tus Posts o Configuración.</p>
+      <p>Usa el menu superior para acceder a tus Posts o Configuracion.</p>
     </h3>
 
     <div v-else>
@@ -51,5 +51,8 @@ const router = useRouter()
     transition: all 0.2s;
     font-weight: 500;
     margin-bottom: -2px;
+}
+.title{
+  text-align: center;
 }
 </style>

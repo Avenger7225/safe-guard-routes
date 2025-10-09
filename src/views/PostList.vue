@@ -71,6 +71,7 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { supabase } from '@/supabase'
 
 const router = useRouter()
 const route = useRoute()
@@ -82,12 +83,19 @@ const filters = ref({
   sort: 'reciente'
 })
 
-// Posts simulados
-const allPosts = ref([
-  { id: 1, title: 'Introducción a Vue 3', excerpt: 'Aprende los básicos...', author: 'Juan', category: 'vue' },
-  { id: 2, title: 'Composition API', excerpt: 'Nueva forma de escribir...', author: 'Maria', category: 'vue' },
-  { id: 3, title: 'Vue Router 4', excerpt: 'Navegación en Vue...', author: 'Pedro', category: 'router' },
-])
+// Posts
+const posts = ref([]) // guardar los posts obtenidos de supabase
+
+const fetchPosts = async () => {
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+  if (error) {
+    console.error('Error al obtener posts:', error)
+  } else {
+    posts.value = data
+  }
+}
 
 // Leer parametros de la URL
 const readQueryParams = () => {
@@ -97,7 +105,10 @@ const readQueryParams = () => {
   filters.value.sort = route.query.sort || 'reciente'
 }
 
-onMounted(() => readQueryParams())
+onMounted(() => {
+  readQueryParams()
+  fetchPosts()
+})
 watch(() => route.query, () => readQueryParams(), { deep: true })
 
 const updateQueryParams = () => {
@@ -141,7 +152,7 @@ const hasActiveFilters = computed(() => {
 
 // Filtrar posts en tiempo real
 const filteredPosts = computed(() => {
-  let result = allPosts.value
+  let result = posts.value
 
   if (filters.value.category) {
     result = result.filter(
@@ -174,7 +185,6 @@ const filteredPosts = computed(() => {
 </script>
 
 <style scoped>
-/* Inputs de filtros */
 .input-filter {
   padding: 6px;
   margin: 8px 0;
@@ -184,7 +194,6 @@ const filteredPosts = computed(() => {
   box-sizing: border-box;
 }
 
-/* Botón para limpiar filtros */
 .btn-clear {
   background-color: #e74c3c;
   color: white;
@@ -216,7 +225,6 @@ const filteredPosts = computed(() => {
   transform: translateY(-2px);
 }
 
-/* Título de post */
 .post-card h3 {
   font-size: 1.2rem;
   font-weight: 600;
@@ -229,7 +237,6 @@ const filteredPosts = computed(() => {
   font-size: 0.95rem;
 }
 
-/* Link "Leer más" */
 .post-card a {
   display: inline-block;
   padding: 6px 12px;
@@ -258,4 +265,3 @@ const filteredPosts = computed(() => {
   color: #555;
 }
 </style>
-

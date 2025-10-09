@@ -41,6 +41,7 @@
 <script setup>
 import { useAuthStore } from '../stores/auth'
 import { useRouter } from 'vue-router'
+//import { supabase } from '@supabase/supabase-js'
 
 const authStore = useAuthStore()
 const router = useRouter()
